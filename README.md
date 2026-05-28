@@ -237,7 +237,7 @@ A economia digital avança em ritmo acelerado — muitas vezes mais rápido do q
 ---
 
 ### 👶 Regulamentação e Direitos: O Novo Marco dos Influenciadores Mirins no Brasil
-`🕝 14h50`
+`🕝 14h50`b
 
 | Participante | Cargo |
 |---|---|

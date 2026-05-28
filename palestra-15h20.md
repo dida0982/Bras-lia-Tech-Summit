@@ -104,5 +104,6 @@ A organização trabalha produzindo estudos e análises sobre:
 * IA;
 * políticas públicas.
 
+
 Seu foco é transformar pesquisas e dados em decisões estratégicas para empresas e governos.
 

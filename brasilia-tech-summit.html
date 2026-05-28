@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brasília Tech Summit 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: rgba(201,168,76,0.15);
+    --bg: #0A0A0B;
+    --bg2: #111113;
+    --bg3: #18181C;
+    --text: #EDE8DF;
+    --text-muted: #7A7670;
+    --text-dim: #4A4845;
+    --accent: #2A5AFF;
+    --green: #1DB87A;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .hero-meta-item .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .hero-meta-item .value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+    align-self: center;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* TIMELINE / PANELS */
+  .stage-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+  }
+
+  .panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .panel-item {
+    background: var(--bg2);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+  }
+
+  .panel-item:hover {
+    border-color: var(--border);
+    background: var(--bg3);
+  }
+
+  .panel-item.open {
+    border-color: var(--border);
+    background: var(--bg3);
+  }
+
+  .panel-header {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.4rem 1.8rem;
+  }
+
+  .panel-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .panel-title-wrap {}
+
+  .panel-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .panel-speakers-preview {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  .panel-toggle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    transition: transform 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .panel-item.open .panel-toggle {
+    transform: rotate(45deg);
+    color: var(--gold);
+  }
+
+  .panel-body {
+    display: none;
+    padding: 0 1.8rem 1.8rem;
+  }
+
+  .panel-item.open .panel-body {
+    display: block;
+  }
+
+  .panel-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .speaker-card {
+    background: var(--bg);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 3px;
+    padding: 0.9rem 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .speaker-card:hover {
+    border-color: var(--border);
+  }
+
+  .speaker-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .speaker-role {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .speaker-card.moderator {
+    border-color: rgba(201,168,76,0.25);
+    background: var(--gold-dim);
+  }
+
+  .speaker-card.moderator .speaker-name::before {
+    content: '🎙 ';
+    font-size: 0.8em;
+  }
+
+  .notes-section {
+    margin-top: 0.5rem;
+  }
+
+  .notes-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .notes-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .notes-list li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .notes-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* TOPICS GRID */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .topic-cell {
+    background: var(--bg2);
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    transition: background 0.2s;
+  }
+
+  .topic-cell:hover {
+    background: var(--bg3);
+  }
+
+  .topic-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .topic-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* SPONSORS */
+  .sponsors-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .sponsor-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.1rem;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .sponsor-badge:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .cta-bar {
+    background: var(--gold-dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 4rem 0 0;
+  }
+
+  .cta-text h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .cta-text p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: #0A0A0B;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+
+  .cta-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  /* SCHEDULE GRID */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .schedule-col-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .schedule-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.07);
+    align-items: flex-start;
+  }
+
+  .schedule-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gold);
+    white-space: nowrap;
+    min-width: 45px;
+    padding-top: 0.1rem;
+  }
+
+  .schedule-name {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    .panel-header {
+      grid-template-columns: 60px 1fr auto;
+      gap: 0.8rem;
+      padding: 1rem 1.2rem;
+    }
+    .schedule-grid { grid-template-columns: 1fr; }
+    .hero-divider { display: none; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <p class="hero-label">1ª Edição · 2026</p>
+  <h1 class="hero-title">Brasília<br><em>Tech Summit</em></h1>
+  <p class="hero-sub">Tecnologia, regulação e o futuro da economia digital brasileira</p>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Data</span>
+      <span class="value">28 de Maio de 2026</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="label">Local</span>
+      <span class="value">SESI LAB Brasília</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="label">Formato</span>
+      <span class="value">Presencial</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TEMAS -->
+<div class="section reveal">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Eixos Temáticos</h2>
+  </div>
+  <div class="topics-grid">
+    <div class="topic-cell"><span class="topic-icon">🤖</span><span class="topic-text">Inteligência Artificial e Governança</span></div>
+    <div class="topic-cell"><span class="topic-icon">🏦</span><span class="topic-text">Open Finance e Pix</span></div>
+    <div class="topic-cell"><span class="topic-icon">🛡️</span><span class="topic-text">Proteção de Dados e Privacidade</span></div>
+    <div class="topic-cell"><span class="topic-icon">🏗️</span><span class="topic-text">Infraestrutura Digital e Data Centers</span></div>
+    <div class="topic-cell"><span class="topic-icon">🎬</span><span class="topic-text">Creator Economy</span></div>
+    <div class="topic-cell"><span class="topic-icon">📱</span><span class="topic-text">Regulação de Plataformas</span></div>
+    <div class="topic-cell"><span class="topic-icon">🌎</span><span class="topic-text">Soberania Digital</span></div>
+    <div class="topic-cell"><span class="topic-icon">🚗</span><span class="topic-text">Mobilidade e Novos Modelos</span></div>
+    <div class="topic-cell"><span class="topic-icon">🛒</span><span class="topic-text">E-commerce</span></div>
+    <div class="topic-cell"><span class="topic-icon">💳</span><span class="topic-text">Meios de Pagamento</span></div>
+    <div class="topic-cell"><span class="topic-icon">👶</span><span class="topic-text">Proteção de Crianças no Ambiente Digital</span></div>
+    <div class="topic-cell"><span class="topic-icon">📣</span><span class="topic-text">Publicidade Sintética</span></div>
+    <div class="topic-cell"><span class="topic-icon">🗳️</span><span class="topic-text">IA, Democracia e Eleições</span></div>
+  </div>
+</div>
+
+<!-- GRADE RESUMIDA -->
+<div class="section reveal" style="padding-top:0">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Programação</h2>
+  </div>
+
+  <div class="schedule-grid">
+    <div>
+      <p class="schedule-col-label">🎤 Palco Principal</p>
+      <div class="schedule-row"><span class="schedule-time">09h00</span><span class="schedule-name">Abertura — Regulação e Inovação</span></div>
+      <div class="schedule-row"><span class="schedule-time">10h30</span><span class="schedule-name">GOVTECH — Fomento e coordenação regulatória</span></div>
+      <div class="schedule-row"><span class="schedule-time">11h10</span><span class="schedule-name">Pagamentos Inteligentes: IA, Pix e tokenização</span></div>
+      <div class="schedule-row"><span class="schedule-time">12h00</span><span class="schedule-name">Governança da IA: infraestrutura e soberania</span></div>
+      <div class="schedule-row"><span class="schedule-time">14h30</span><span class="schedule-name">Regulação e Crescimento na Economia Digital</span></div>
+      <div class="schedule-row"><span class="schedule-time">15h20</span><span class="schedule-name">Creators e Negócios de Impacto</span></div>
+      <div class="schedule-row"><span class="schedule-time">16h30</span><span class="schedule-name">Novos Modelos de Negócios e Reguladores</span></div>
+      <div class="schedule-row"><span class="schedule-time">17h10</span><span class="schedule-name">IA, Democracia e Eleições</span></div>
+      <div class="schedule-row"><span class="schedule-time">18h00</span><span class="schedule-name">Encerramento</span></div>
+    </div>
+    <div>
+      <p class="schedule-col-label">💬 Smart Talks</p>
+      <div class="schedule-row"><span class="schedule-time">10h30</span><span class="schedule-name">IA em Economias Emergentes</span></div>
+      <div class="schedule-row"><span class="schedule-time">11h40</span><span class="schedule-name">Combate às Bets Ilegais no Esporte</span></div>
+      <div class="schedule-row"><span class="schedule-time">14h50</span><span class="schedule-name">Marco dos Influenciadores Mirins</span></div>
+      <div class="schedule-row"><span class="schedule-time">15h30</span><span class="schedule-name">Publicidade Sintética e Poder de Mercado</span></div>
+      <div class="schedule-row"><span class="schedule-time">16h30</span><span class="schedule-name">Fair Share: Infraestrutura da Internet</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PALCO PRINCIPAL -->
+<div class="section reveal" style="padding-top:0">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Palco Principal</h2>
+  </div>
+
+  <div class="stage-label">🎤 Painéis & Anotações</div>
+
+  <div class="panel-list" id="mainStage"></div>
+</div>
+
+<!-- SMART TALKS -->
+<div class="section reveal" style="padding-top:0">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Smart Talks</h2>
+  </div>
+
+  <div class="stage-label">💬 Sessões Paralelas</div>
+
+  <div class="panel-list" id="smartTalks"></div>
+</div>
+
+<!-- PATROCINADORES + CTA -->
+<div class="section reveal" style="padding-top:0">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Patrocínio & Apoio</h2>
+  </div>
+  <div class="sponsors-row">
+    <span class="sponsor-badge">Caixa Econômica Federal</span>
+    <span class="sponsor-badge">Governo do Brasil</span>
+    <span class="sponsor-badge">EXA</span>
+    <span class="sponsor-badge">ABDI</span>
+    <span class="sponsor-badge">Prefeitura do Rio de Janeiro</span>
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-text">
+      <h3>Faça seu credenciamento</h3>
+      <p>Evento presencial · SESI LAB Brasília · 28 de maio de 2026</p>
+    </div>
+    <a href="https://forms.office.com/r/mVpNadqfut" target="_blank" class="cta-btn">Credenciar-se →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Brasília Tech Summit 2026 · Promovido pelo canal Amado Mundo · Curadoria: Fabro Steibel (ITS-Rio)</p>
+</footer>
+
+<script>
+const mainPanels = [
+  {
+    time: "09h00",
+    name: "Abertura — Regulação e Inovação: Como criar segurança jurídica sem travar o futuro digital",
+    speakers: [
+      { name: "Paulo Gonet", role: "Procurador-Geral da República" },
+      { name: "Hugo Motta", role: "Presidente da Câmara dos Deputados" },
+      { name: "Fábio Coelho", role: "Diretor Executivo · Google Brasil" },
+      { name: "Juliana Sztrajtman", role: "CEO · Amazon Brasil" },
+      { name: "Alberto Leite", role: "Fundador e CEO · Grupo FS" },
+      { name: "Guilherme Amado", role: "Moderador · Publisher do Amado Mundo", mod: true },
+    ],
+    notes: [
+      "O Brasil enfrenta o desafio clássico de regular sem sufocar: segurança jurídica como pré-requisito para atração de investimentos",
+      "Setor privado e governo sinalizaram disposição para um marco regulatório colaborativo, não adversarial",
+      "Tensão central: velocidade da tecnologia vs. lentidão dos processos legislativos",
+      "Consenso de que o Brasil não pode regular por pânico — precisa de agenda proativa e baseada em evidências",
+      "Discussão sobre o risco de over-regulation afastar startups e empresas tech do país"
+    ]
+  },
+  {
+    time: "10h30",
+    name: "GOVTECH — Fomento e coordenação regulatória",
+    speakers: [
+      { name: "Carlos Vieira", role: "Presidente · Caixa Econômica Federal" },
+      { name: "Raquel Flexa", role: "Subsecretária de Transformação Digital · Casa Civil / Pref. Rio de Janeiro" },
+      { name: "Gerusa Falcão", role: "CEO · G4F" },
+      { name: "Danilo Fariello", role: "Moderador · Fundador da Fariello Comunicação", mod: true },
+    ],
+    notes: [
+      "GovTech como vetor de modernização do Estado: tecnologia aplicada a serviços públicos reduz custos e aumenta eficiência",
+      "Prefeitura do Rio apresentou iniciativas de cidades inteligentes: dados para gestão de mobilidade, saúde e segurança pública",
+      "Caixa como indutor de inclusão financeira digital, especialmente via Pix e programas sociais",
+      "Desafio de coordenação federativa: municípios, estados e União precisam de padrões comuns de interoperabilidade",
+      "Compras públicas de tecnologia como instrumento de política industrial — Estado como cliente âncora para startups"
+    ]
+  },
+  {
+    time: "11h10",
+    name: "Pagamentos Inteligentes: Como IA, Pix e tokenização estão redefinindo os meios de pagamento?",
+    speakers: [
+      { name: "Roberto Amaral", role: "Sócio · QI Tech" },
+      { name: "Rogério Panca", role: "Sócio · Oliver Wyman" },
+      { name: "Renata Daltro", role: "VP · Cielo" },
+      { name: "Renato Ciuchini", role: "Partner · EXA" },
+      { name: "Sheila D'Amorim", role: "Moderadora · Jornalista", mod: true },
+    ],
+    notes: [
+      "Pix consolidado como caso de sucesso global — referência para outros países em infraestrutura de pagamentos instantâneos",
+      "Próximo passo: Pix automático e Pix por aproximação expandindo casos de uso",
+      "Tokenização de ativos reais (RWA): imóveis, agronegócio e crédito tokenizado como próxima fronteira",
+      "IA aplicada a pagamentos: detecção de fraude em tempo real, personalização de crédito e análise comportamental",
+      "Open Finance como habilitador: dados compartilhados permitem produtos financeiros mais adequados ao perfil do cliente",
+      "Regulação do Bacen vista como equilibrada — inovadora mas com guardrails de proteção ao consumidor"
+    ]
+  },
+  {
+    time: "12h00",
+    name: "Governança da IA: Infraestrutura, soberania e coordenação regulatória",
+    speakers: [
+      { name: "Aguinaldo Ribeiro", role: "Deputado Federal · Relator da Regulação de IA" },
+      { name: "Ricardo Cappelli", role: "Ex-Presidente · ABDI" },
+      { name: "Laura Schertel Mendes", role: "Professora · IDP" },
+      { name: "Felipe Daud", role: "Dir. de Relações Governamentais e Políticas Públicas · Alibaba" },
+      { name: "Natália Paiva", role: "Moderadora · Diretora da Alandar", mod: true },
+    ],
+    notes: [
+      "PL de IA no Brasil: abordagem baseada em risco, similar ao EU AI Act, mas adaptada à realidade brasileira",
+      "Soberania de dados: onde os dados dos brasileiros são processados? Debate sobre data centers nacionais",
+      "ABDI e política industrial de IA: como o Brasil pode desenvolver capacidade própria em modelos e infraestrutura",
+      "Alibaba trouxe visão de como economias emergentes podem se posicionar na cadeia de valor global da IA",
+      "Debate sobre concentração de mercado: poucos players globais controlam a infraestrutura — como garantir competição?",
+      "LGPD como base para regulação de IA: proteção de dados e governança algorítmica como faces da mesma moeda"
+    ]
+  },
+  {
+    time: "14h30",
+    name: "Regulação e Crescimento: Onde o Brasil ganha ou perde na Economia Digital?",
+    speakers: [
+      { name: "Bruno Lewicki", role: "Head de Políticas Públicas para América Latina · OpenAI" },
+      { name: "Tatiana Mattos", role: "Presidente · BlaBlaCar Brasil" },
+      { name: "Gloria Guimarães", role: "Diretora-Presidente · BD30+" },
+      { name: "Guilherme Amado", role: "Moderador · Publisher do Amado Mundo", mod: true },
+    ],
+    notes: [
+      "OpenAI: regulação excessiva pode desviar o desenvolvimento de IA para jurisdições menos restritivas",
+      "Economia de plataformas de mobilidade: como regular novos modelos sem destruir o serviço",
+      "Brasil tem vantagens competitivas reais: mercado grande, população jovem e ecossistema de fintechs maduro",
+      "Risco de arbitragem regulatória: empresas migrando para países com menos restrições prejudica consumidores brasileiros",
+      "Discussão sobre tributação de empresas digitais — garantir que grandes plataformas contribuam fiscalmente no Brasil",
+      "Oportunidade: o Brasil pode exportar modelos regulatórios para a América Latina, tornando-se referência regional"
+    ]
+  },
+  {
+    time: "15h20",
+    name: "Creators e Negócios de Impacto: A Futura Economia Digital Brasileira",
+    speakers: [
+      { name: "Guilherme Sampaio", role: "Apresentador e creator · DiaTV" },
+      { name: "Flávia Paixão", role: "Empreendedora EdTech" },
+      { name: "Pedro Ramos", role: "Professor of Internet Studies · RegLab" },
+      { name: "Catarina Alencastro", role: "Moderadora · Gerente de Parcerias Estratégicas · YouTube", mod: true },
+    ],
+    notes: [
+      "Creator economy no Brasil: país é um dos maiores mercados globais de conteúdo digital",
+      "Necessidade de formalização: criadores operando na informalidade sem acesso a previdência, crédito e proteção trabalhista",
+      "EdTech e criadores educacionais: como monetizar conhecimento e democratizar acesso à educação de qualidade",
+      "Algoritmos das plataformas como reguladores de fato: quem controla a distribuição controla a renda dos criadores",
+      "Direitos autorais na era da IA generativa — criadores temem que seus conteúdos treinem modelos sem remuneração",
+      "YouTube apresentou iniciativas de monetização e proteção de criadores brasileiros na plataforma"
+    ]
+  },
+  {
+    time: "16h30",
+    name: "Novos Modelos de Negócios: O papel dos reguladores no fomento à inovação e à competitividade",
+    speakers: [
+      { name: "Edson Lopes", role: "Managing Director · FlixBus" },
+      { name: "Fernanda Pascale", role: "Diretora Jurídica · Quinto Andar" },
+      { name: "Luis Roberto Barroso", role: "Ex-Presidente do Supremo Tribunal Federal" },
+      { name: "Beto Vasconcellos", role: "Advogado · Ex-Secretário Nacional de Justiça" },
+      { name: "Bia Nóbrega", role: "Moderadora · Diretora do Instituto OpenBR", mod: true },
+    ],
+    notes: [
+      "Barroso: o Judiciário não pode ser obstáculo à inovação — juízes precisam de preparo técnico para casos de economia digital",
+      "Regulação sandbox como ferramenta: testar modelos inovadores em ambiente controlado antes da regulação plena",
+      "Quinto Andar: como navegar entre regulação imobiliária tradicional e inovação de plataforma",
+      "FlixBus: experiência europeia como referência — como abrir mercados sem prejudicar incumbentes",
+      "Tensão entre proteger consumidores e não criar barreiras à entrada de novos modelos de negócio",
+      "Papel ativo dos reguladores (Anatel, Bacen, ANAC, ANTT) no diálogo com setor privado antes de legislar"
+    ]
+  },
+  {
+    time: "17h10",
+    name: "IA, Democracia e Eleições: Os novos limites do debate público",
+    speakers: [
+      { name: "Estela Aranha", role: "Ministra · Tribunal Superior Eleitoral" },
+      { name: "Guilherme Amado", role: "Moderador · Publisher do Amado Mundo", mod: true },
+    ],
+    notes: [
+      "TSE na vanguarda da regulação de IA eleitoral: resolução que proíbe deepfakes e conteúdo sintético enganoso em campanhas",
+      "Desinformação potencializada por IA: custo de produção de fake news caiu drasticamente — escala e velocidade são os novos desafios",
+      "Responsabilidade das plataformas: até onde o TSE pode exigir moderação de conteúdo de empresas estrangeiras?",
+      "Transparência em publicidade política: rastreabilidade de quem paga por anúncios é condição mínima para democracia",
+      "IA pode também proteger a democracia: detecção automatizada de desinformação e monitoramento de narrativas coordenadas",
+      "Equilíbrio entre liberdade de expressão e proteção da integridade eleitoral — linha tênue e disputada"
+    ]
+  }
+];
+
+const smartPanels = [
+  {
+    time: "10h30",
+    name: "Estruturando mercados de IA em economias emergentes: Dados, PMEs e adoção produtiva",
+    speakers: [
+      { name: "Gesner Oliveira", role: "Sócio · GO Associados" },
+      { name: "Júlio Lopes", role: "Deputado · Frente Parlamentar pelo Brasil Competitivo" },
+      { name: "Artur Coimbra", role: "Advogado · Ex-Conselheiro Diretor da Anatel" },
+      { name: "Fabro Steibel", role: "Mediador · Diretor Executivo do ITS Rio", mod: true },
+    ],
+    notes: [
+      "PMEs e IA: como garantir que pequenas empresas brasileiras adotem IA sem depender exclusivamente de soluções importadas",
+      "Qualidade e disponibilidade de dados em português: gargalo para desenvolvimento de modelos voltados ao mercado brasileiro",
+      "Política de concorrência na IA: como evitar que poucos players dominem infraestrutura, modelos e aplicações",
+      "Papel da Anatel na regulação de conectividade como base para a economia de IA",
+      "Agenda legislativa para desburocratização e estímulo à adoção de IA na indústria"
+    ]
+  },
+  {
+    time: "11h40",
+    name: "Combate às bets ilegais no esporte: como proteger o mercado regulado?",
+    speakers: [
+      { name: "Guilherme Figueiredo", role: "Diretor · Betano" },
+      { name: "Giovanni Rocco", role: "Secretário de Apostas Esportivas" },
+      { name: "Fábio Caires", role: "Head de Relações Institucionais · IBJR" },
+      { name: "Matheus Puppe", role: "Moderador · Advogado e colunista do Amado Mundo", mod: true },
+    ],
+    notes: [
+      "Regulação das bets no Brasil: mercado bilionário que exige equilíbrio entre arrecadação fiscal e proteção ao consumidor",
+      "Bets ilegais operam sem licença, sem proteção ao jogador e sem pagar impostos — concorrência desleal com operadores regulados",
+      "Jogo responsável como obrigação regulatória: limites de depósito, autoexclusão e alertas de comportamento compulsivo",
+      "Tecnologia de geoblocking e rastreamento financeiro para bloquear sites ilegais — desafio técnico e jurisdicional",
+      "Impacto no esporte: patrocínios de bets respondem por fatia crescente da receita de clubes brasileiros",
+      "Gap entre regulação aprovada e enforcement efetivo — Secretaria ainda estruturando a fiscalização"
+    ]
+  },
+  {
+    time: "14h50",
+    name: "Regulamentação e Direitos: O Novo Marco dos Influenciadores Mirins no Brasil",
+    speakers: [
+      { name: "Victor Oliveira Fernandes", role: "Secretário Nacional de Direitos Digitais" },
+      { name: "Roberta Jacarandá", role: "Head de Relações Institucionais · Conselho Digital" },
+      { name: "Cecília Dassi", role: "Psicóloga e ex-atriz mirim" },
+      { name: "Alana Rizzo", role: "Moderadora · YouTube", mod: true },
+    ],
+    notes: [
+      "Crianças como produto: quando pais monetizam a imagem dos filhos em redes sociais, quem protege a criança?",
+      "Proposta de marco: percentual da receita gerada por menores deve ser reservado em conta bloqueada até a maioridade",
+      "Impactos psicológicos da exposição precoce: consequências de crescer sob os olhos do público digital",
+      "Plataformas têm responsabilidade ativa: não basta ter política de uso — é preciso fiscalizar conteúdo com menores",
+      "LGPD e crianças: dados de menores merecem proteção reforçada — consentimento parental não é suficiente em todos os casos"
+    ]
+  },
+  {
+    time: "15h30",
+    name: "Publicidade Sintética e Poder de Mercado: Quem controla a publicidade digital?",
+    speakers: [
+      { name: "Thiago Marqueto", role: "Gerente Nacional de Publicidade · Caixa" },
+      { name: "Eliel Allebrandt", role: "MD · Brívia" },
+      { name: "Bruna Ferraz", role: "Gerente Executiva de Publicidade · Banco do Brasil" },
+      { name: "Thalita Martorelli", role: "Diretora de Marketing · Cielo" },
+      { name: "Sheila D'Amorim", role: "Moderadora · Jornalista", mod: true },
+    ],
+    notes: [
+      "Publicidade sintética gerada por IA: reduz custos de produção drasticamente, mas levanta questões de autenticidade e transparência",
+      "Concentração do mercado publicitário digital: Google e Meta dominam — como garantir diversidade de mídia?",
+      "Anunciantes públicos (Caixa, BB) têm responsabilidade adicional: onde o dinheiro público é investido importa",
+      "Brand safety: marcas precisam garantir que anúncios não apareçam em conteúdo prejudicial ou desinformativo",
+      "IA na compra programática: automação acelera segmentação mas reduz transparência sobre o destino dos recursos",
+      "Atualização das normas do CONAR e papel do Cade na concentração de adtech"
+    ]
+  },
+  {
+    time: "16h30",
+    name: "FAIR SHARE: Quem paga pela rede? Caminhos para o crescimento da infraestrutura da internet",
+    speakers: [
+      { name: "Fabio Andrade", role: "VP de Relações Institucionais · Claro" },
+      { name: "Alessandro Molon", role: "Executivo · DIGIA — Aliança pela Infraestrutura Digital e Internet Aberta" },
+      { name: "Juliana Bierrenbach", role: "Moderadora · Advogada", mod: true },
+    ],
+    notes: [
+      "Fair share: debate global sobre se grandes plataformas (Netflix, YouTube, Meta) devem contribuir financeiramente para a rede que usam",
+      "Operadoras investem bilhões em infraestrutura enquanto plataformas capturam grande parte do valor — assimetria econômica",
+      "Argumento contrário: taxar plataformas pode ser repassado ao consumidor e comprometer a neutralidade de rede",
+      "Brasil precisa expandir infraestrutura digital para regiões remotas — financiamento do FUST e novas fontes de receita",
+      "Data centers: localização, regulação de energia e água, incentivos fiscais para atrair investimentos ao Brasil",
+      "IoT e 5G demandam nova geração de infraestrutura — quem financia e quem regula?"
+    ]
+  }
+];
+
+function buildPanels(data, containerId) {
+  const container = document.getElementById(containerId);
+  data.forEach((panel, i) => {
+    const item = document.createElement('div');
+    item.className = 'panel-item';
+
+    const speakersPreview = panel.speakers
+      .filter(s => !s.mod)
+      .slice(0, 3)
+      .map(s => s.name)
+      .join(' · ') + (panel.speakers.filter(s => !s.mod).length > 3 ? ' +…' : '');
+
+    const speakersHTML = panel.speakers.map(s => `
+      <div class="speaker-card ${s.mod ? 'moderator' : ''}">
+        <div class="speaker-name">${s.name}</div>
+        <div class="speaker-role">${s.role}</div>
+      </div>
+    `).join('');
+
+    const notesHTML = panel.notes.map(n => `<li>${n}</li>`).join('');
+
+    item.innerHTML = `
+      <div class="panel-header">
+        <span class="panel-time">${panel.time}</span>
+        <div class="panel-title-wrap">
+          <div class="panel-name">${panel.name}</div>
+          <div class="panel-speakers-preview">${speakersPreview}</div>
+        </div>
+        <div class="panel-toggle">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <line x1="7" y1="1" x2="7" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="1" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-divider"></div>
+        <div class="speakers-grid">${speakersHTML}</div>
+        <div class="notes-section">
+          <p class="notes-label">Anotações</p>
+          <ul class="notes-list">${notesHTML}</ul>
+        </div>
+      </div>
+    `;
+
+    item.querySelector('.panel-header').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+
+    container.appendChild(item);
+  });
+}
+
+buildPanels(mainPanels, 'mainStage');
+buildPanels(smartPanels, 'smartTalks');
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

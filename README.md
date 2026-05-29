@@ -2,7 +2,19 @@
 
 > **Maior encontro sobre regulação da economia digital já realizado no Brasil**
 
----
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/467cfb2f-d3be-4684-8372-1348d9ddd410" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/64721d2b-d8d7-495a-8f26-f1b5d49f0255" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/694d5435-b464-42c1-9b42-9316c1a29dba" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/731e0fc8-bc8a-4b27-bcf0-41f9fd550c0b" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/7e486857-e3d3-43eb-a23c-ea3823f95f6f" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/a44c3be8-6752-4695-b771-dade820c4afc" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/9cccd77d-530f-4c64-a8fb-03bf23a139af" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/ef228a28-131f-4359-bbb7-21d811598d4f" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/16281729-ee13-4ae3-8a63-bebfa3b491fb" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/31f15be8-c16e-4725-ad20-8c1799fd9f09" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/64b2c151-8c8c-4d70-94b0-e496aff975a8" />
+<img width="720" height="1599" alt="Image" src="https://github.com/user-attachments/assets/bc806c45-4472-4187-bbd3-edafe3609b90" />
+<img width="1599" height="720" alt="Image" src="https://github.com/user-attachments/assets/9d2ff151-9cd9-424c-a986-197152570ff5" />
 
 ```
 📅 28 de maio de 2026   📍 SESI LAB Brasília   🎙️ Regulação · IA · Futuro Digital
